@@ -1,2 +1,4 @@
 .codemie/
 .venv/
+__pycache__
+.vscode/
