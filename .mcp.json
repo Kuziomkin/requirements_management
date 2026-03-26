@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "requirements-manager": {
+      "command": "python",
+      "args": ["server.py"],
+      "env": {
+        "PYTHONPATH": "."
+      }
+    }
+  }
+}

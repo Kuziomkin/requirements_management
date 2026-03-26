@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.venv/bin/pip install:*)",
+      "Bash(.venv/bin/python -c \"import fastmcp; print\\(fastmcp.__file__\\)\")",
+      "Bash(source .venv/bin/activate)",
+      "Bash(pip list:*)",
+      "Bash(pip install:*)",
+      "Bash(timeout 5 python server.py)",
+      "Bash(python -c \"import server; print\\(''MCP server imported successfully''\\)\")",
+      "Bash(python -c \":*)",
+      "mcp__requirements-manager__analyze_requirements_tracker",
+      "Bash(python3 hooks/update_excel.py)",
+      "Bash(python3:*)",
+      "Bash(grep -E \"\\\\.py$|requirements/\")",
+      "Bash(source /Users/Dzianis_Kuziomkin/repositories/requirements_management/.venv/bin/activate)",
+      "Bash(python -c \"import yaml; print\\(f''PyYAML version: {yaml.__version__}''\\)\")"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "requirements-manager"
+  ],
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/Dzianis_Kuziomkin/repositories/requirements_management/hooks/update_excel.py"
+          }
+        ]
+      }
+    ]
+  }
+}
