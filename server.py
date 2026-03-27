@@ -10,7 +10,7 @@ mcp = FastMCP("RequirementsMCP", log_level="DEBUG")
 
 @mcp.tool(
     name="create_requirement_tracker",
-    description="Create a Excel tracker for requirements if it doesn't exist"
+    description="Create a Excel tracker for requirements if it doesn't exist. Returns status of creation or existence. Call it before creating the requirement to ensure the tracker is set up."
 )
 def create_requirement_tracker(
         excel_path: str = Field(default="requirements/requirements_tracker.xlsx", description="Path to the Excel tracker file")
@@ -48,7 +48,7 @@ def create_requirement_tracker(
 
 @mcp.tool(
     name="analyze_requirements_tracker",
-    description="Analyzes the requirements tracker Excel file to generate next REQ-ID and check for duplicate/conflicting requirements"
+    description="Analyzes the requirements tracker Excel file to generate next REQ-ID and check for duplicate/conflicting requirements. Returns analysis results and recommendations for the new requirement based on the user's request. Call it with the user's requirement summary to get insights before creating a new requirement."
 )
 def analyze_requirements_tracker(
     user_request: str = Field(..., description="Summary of what the user wants to create a requirement for"),
@@ -182,6 +182,32 @@ def analyze_requirements_tracker(
                 "details": f"Error analyzing tracker: {str(e)}. Defaulting to REQ-001."
             }
         }, indent=2)
+    
+    
+@mcp.resource(
+    uri="requirements://list",
+    name="Get all requirements documents",
+    description="Returns a list of all requirements documents in the tracker."
+)
+def get_all_requirements_documents() -> str:
+    """
+    Scans the requirements directory and returns a list of all requirement document paths as JSON.
+    """
+    try:
+        req_docs = []
+        for path in Path("requirements").rglob("REQ-*.md"):
+            req_docs.append(str(path))
+        return json.dumps({
+            "requirements": req_docs,
+            "count": len(req_docs)
+        }, indent=2)
+    except Exception as e:
+        return json.dumps({
+            "error": str(e),
+            "requirements": [],
+            "count": 0
+        }, indent=2)
+    
 
 
 if __name__ == "__main__":

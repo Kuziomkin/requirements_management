@@ -14,7 +14,10 @@
       "Bash(python3:*)",
       "Bash(grep -E \"\\\\.py$|requirements/\")",
       "Bash(source /Users/Dzianis_Kuziomkin/repositories/requirements_management/.venv/bin/activate)",
-      "Bash(python -c \"import yaml; print\\(f''PyYAML version: {yaml.__version__}''\\)\")"
+      "Bash(python -c \"import yaml; print\\(f''PyYAML version: {yaml.__version__}''\\)\")",
+      "Bash(claude sessions:*)",
+      "mcp__requirements-manager__create_requirement_tracker",
+      "Bash(python:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

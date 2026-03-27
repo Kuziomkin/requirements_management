@@ -1,6 +1,8 @@
 ---
 name: write-requirement
 description: Create structured requirement documents with YAML metadata, detailed implementation notes, and diagrams. Use this skill whenever the user mentions "requirement", "req", "requirements", or asks to document a feature specification. Make sure to use this skill when the user wants to write technical specifications, feature requirements, or create REQ-XXX documents, even if they don't explicitly say "use the requirement skill".
+argument-hint: requirement
+disable-model-invocation: true
 ---
 
 # Requirements Writer Skill
@@ -244,36 +246,59 @@ Continue with technical implementation questions using options:
 - **Time ranges**: Use `multiSelect: true` for supported date ranges (e.g., "Any two months", "Year-over-year", "Quarterly", "Rolling 12-month")
 - **Integration specifics**: When applicable, ask about specific systems (e.g., "Salesforce", "HubSpot", "Dynamics", "Custom CRM")
 
+**Question set 4: Technical specifics (ALWAYS use options)**
+
+**CRITICAL: For ALL technical detail questions, provide 3-4 options using AskUserQuestion.** Never ask these as open-ended text questions. Common patterns:
+
+- **Database field names**: Provide 3-4 common naming conventions
+  - Example: "expires_at", "expiry_date", "valid_until", "membership_end_date"
+- **Cache/timeout durations**: Provide 3-4 time ranges with trade-off descriptions
+  - Example: "5 minutes (frequent refresh)", "15 minutes (balanced)", "1 hour (longer cache)", "Session-based (until user logs out)"
+- **API endpoints/paths**: Provide 3-4 RESTful or common patterns
+  - Example: "/api/auth/login", "/auth/login", "/v1/authenticate", "/login"
+- **Security/auth methods**: List 3-4 standard approaches
+  - Example: "JWT tokens", "Session cookies", "OAuth 2.0", "API keys"
+- **Rate limits**: Provide 3-4 common rate limit patterns
+  - Example: "10 requests/minute per user", "100 requests/hour per IP", "1000 requests/day per API key", "No rate limiting"
+- **Error handling behavior**: Describe 3-4 approaches with trade-offs
+  - Example: "Return 4XX with error message", "Silent failure (log only)", "Retry with exponential backoff", "Fail fast and alert"
+- **Logging strategies**: Options for what/how to log
+  - Example: "Log with user ID and timestamp", "Aggregate metrics only (no PII)", "No logging", "Log only errors/failures"
+- **Grace periods/timeouts**: Provide concrete durations
+  - Example: "No grace period", "7-day grace period", "24-hour grace period", "30-day soft expiration"
+- **Status/state values**: List 3-4 possible states
+  - Example: "active/expired (binary)", "active/expired/suspended", "active/grace_period/expired", "active/pending/expired/cancelled"
+
 **Pro tips for AskUserQuestion:**
 - Group related questions into sets (2-4 questions per AskUserQuestion call) to reduce back-and-forth
 - Use descriptive labels (3-8 words) and descriptions that explain trade-offs or implications
-- Set `multiSelect: true` when users might want multiple options (metrics, access roles, features)
+- Set `multiSelect: true` when users might want multiple options (metrics, access roles, features, multiple states)
 - Make options contextually relevant to the user's initial request — don't use generic options
-- If you're unsure what options to provide, ask one open-ended question first, then use the answer to generate relevant options for follow-up questions
+- **Always provide at least 3 options** - never ask a yes/no question (add "Other approach" as third option)
+- If you're unsure what options to provide, think of the 3-4 most common industry patterns for that technical decision
 
-#### Step 2.3: Open-ended probing (when options don't fit)
+#### Step 2.3: Open-ended probing (RARE - prefer options)
 
-For implementation details that are too specific or technical for multiple-choice, ask open-ended follow-up questions:
+**DEFAULT TO OPTIONS.** Only ask open-ended questions when the question is truly unique or narrative-based and cannot be broken into choices.
 
-**Implementation depth probing:**
-- Technologies/frameworks involved (e.g., "JWT tokens", "bcrypt hashing")
-- API endpoints, data models, or architecture patterns
-- Configuration details (timeouts, limits, cost factors)
-- Security considerations
-- Performance requirements
-- Edge cases or error handling
+**When open-ended questions are appropriate (rare cases):**
+- Workflow narratives: "Walk me through how a manager would use this feature on a typical day"
+- Business context: "What's the business driver for this feature?"
+- Unique constraints: "Are there any compliance/legal requirements specific to your industry?"
+- Free-form edge cases: "Are there any unusual scenarios I should consider?"
 
-**Example open-ended questions:**
-- "Walk me through how a manager would use this feature on a typical day"
-- "What happens when [edge case occurs]?"
-- "Are there any security or compliance concerns I should know about?"
-- "What performance requirements or data volume constraints should I consider?"
+**When open-ended questions are NOT appropriate (use AskUserQuestion instead):**
+- ❌ "What field stores the expiration?" → ✅ Provide 3-4 field name options
+- ❌ "How long should the cache last?" → ✅ Provide 3-4 duration options
+- ❌ "What should happen when [X]?" → ✅ Provide 3-4 behavior options
+- ❌ "Should we log this?" → ✅ Provide 3-4 logging strategy options
+- ❌ "What technologies should we use?" → ✅ Provide 3-4 tech stack options
 
-**When to use open-ended vs. options:**
-- Use **AskUserQuestion with options** for: naming, prioritization, technology choices, access control, feature toggles, common patterns
-- Use **open-ended questions** for: workflows, edge cases, specific technical constraints, security requirements, unique business logic
+**Rule of thumb:** If you can imagine 3-4 common answers to a question, provide those as options using AskUserQuestion. Only ask open-ended if the answer is truly unbounded or narrative.
 
 #### Step 2.4: When to finish the interview
+
+**Stop asking questions once you have enough detail.** You don't need to know every possible edge case upfront.
 
 Stop asking questions when:
 - You have enough detail to write a specific **Implementation → Approach** section with concrete technologies, endpoints, and configuration
@@ -447,12 +472,28 @@ If you notice the requirement is underspecified or has potential issues (securit
 
 **User selects:** Password Reset via Email, Medium, Email with link, Backend API + Web
 
-**Claude:** "Great! A few technical details:
-- How long should the reset token be valid?
-- Should there be rate limiting on reset requests?
-- Should old sessions be invalidated immediately after password reset?"
+**Claude:** [Uses AskUserQuestion for technical details:]
 
-**User:** "Token valid 1 hour, rate limit 3 requests per hour per email, yes invalidate sessions"
+**Question Set 3 (Technical Details):**
+1. "How long should the reset token be valid?"
+   - 15 minutes (high security, short window)
+   - 1 hour (balanced approach) (Recommended)
+   - 24 hours (user convenience)
+   - 7 days (very long expiry)
+
+2. "Should there be rate limiting on reset requests?" (multiSelect: false)
+   - 3 requests per hour per email (Recommended)
+   - 5 requests per hour per email
+   - 10 requests per day per email
+   - No rate limiting
+
+3. "Should old sessions be invalidated after password reset?" (multiSelect: false)
+   - Yes, invalidate all sessions immediately (Recommended)
+   - Yes, but keep current session active
+   - No, let sessions expire naturally
+   - User chooses during reset flow
+
+**User selects:** 1 hour, 3 requests per hour, invalidate all sessions
 
 **Claude:** [Writes detailed Implementation → Approach with these specifics]
 
