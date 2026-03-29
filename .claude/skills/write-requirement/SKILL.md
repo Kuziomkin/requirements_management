@@ -2,7 +2,7 @@
 name: write-requirement
 description: Create structured requirement documents with YAML metadata, detailed implementation notes, and diagrams. Use this skill whenever the user mentions "requirement", "req", "requirements", or asks to document a feature specification. Make sure to use this skill when the user wants to write technical specifications, feature requirements, or create REQ-XXX documents, even if they don't explicitly say "use the requirement skill".
 argument-hint: requirement
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Requirements Writer Skill
