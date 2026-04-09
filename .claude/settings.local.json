@@ -17,7 +17,8 @@
       "Bash(python -c \"import yaml; print\\(f''PyYAML version: {yaml.__version__}''\\)\")",
       "Bash(claude sessions:*)",
       "mcp__requirements-manager__create_requirement_tracker",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(ls -d */)"
     ]
   },
   "enableAllProjectMcpServers": true,
