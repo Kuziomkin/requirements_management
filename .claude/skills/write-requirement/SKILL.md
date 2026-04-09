@@ -18,9 +18,14 @@ Every requirement document follows this exact structure:
 id: REQ-XXX
 name: [Requirement Name]
 description: [One-line summary]
+type: [functional_requirement|non_functional_requirement|technical_requirement]
 status: [draft|in-review|approved|implemented]
 priority: [low|medium|high|critical]
 owner: [team-name]
+owner_link: [[Person Name]]  # Link to Wiki/People/ for Obsidian graph
+domain: [[Primary Concept]]  # Link to Wiki/Concepts/
+tech_stack: [[Tool 1]], [[Tool 2]]  # Links to Wiki/Tools/
+related_concepts: [[Concept A]], [[Technique B]]  # Links to Wiki/Concepts/ or Wiki/Techniques/
 related_to:
   - REQ-YYY
   - REQ-ZZZ
@@ -58,6 +63,33 @@ test_cases: []  # Leave empty initially; TC-XXX IDs added later by QA team
 
 **Important notes on YAML frontmatter format:**
 
+- **type**: Classification of requirement. Options: `functional_requirement`, `non_functional_requirement`, `technical_requirement`
+  - Functional: User-facing features and behaviors
+  - Non-functional: Performance, security, scalability, compliance
+  - Technical: Infrastructure, architecture, technical debt
+
+- **owner**: Team name as plain text for Excel tracking (e.g., `backend-team`, `analytics-team`)
+
+- **owner_link**: Person responsible, using Obsidian wikilink format to create graph connections
+  ```yaml
+  owner_link: [[John Doe]]  # Links to Wiki/People/john-doe.md
+  ```
+
+- **domain**: Primary concept area using wikilink to Wiki/Concepts/
+  ```yaml
+  domain: [[Data Lineage]]  # Links to Wiki/Concepts/data-lineage.md
+  ```
+
+- **tech_stack**: Comma-separated wikilinks to Wiki/Tools/ pages for all technologies used
+  ```yaml
+  tech_stack: [[dbt]], [[Databricks]], [[Azure Data Factory]]
+  ```
+
+- **related_concepts**: Comma-separated wikilinks to Wiki/Concepts/ or Wiki/Techniques/ pages (optional)
+  ```yaml
+  related_concepts: [[Schema Auditing]], [[Incremental Loading]]
+  ```
+
 - **related_to**: Simple string array of REQ-IDs. No comments or descriptions in YAML.
   ```yaml
   related_to:
@@ -72,6 +104,13 @@ test_cases: []  # Leave empty initially; TC-XXX IDs added later by QA team
     - TC-001
     - TC-002
   ```
+
+**Why Obsidian Properties Matter:**
+These wikilink properties (`owner_link`, `domain`, `tech_stack`, `related_concepts`) create automatic bidirectional connections in Obsidian's graph view. This enables:
+- Clicking a tool page shows all requirements using that technology
+- Viewing a person page shows all requirements they own
+- Navigating from concept to all related requirements
+- Impact analysis when technologies or concepts change
 
 ## Workflow
 
@@ -196,11 +235,16 @@ Ask focused questions to gather essential information. Do NOT assume or invent d
 
 Start by gathering the foundational details using AskUserQuestion with multiple-choice options:
 
-**Question set 1: Core identification**
+**Question set 1: Core identification and Obsidian Properties**
 - **Name**: Provide 3-4 naming options based on the user's description (e.g., "Sales Performance Dashboard", "Monthly Performance Comparison", "Sales Team Analytics")
+- **Type**: Options: Functional Requirement, Non-Functional Requirement, Technical Requirement
 - **Priority**: Options: Critical, High, Medium, Low (with descriptions explaining urgency)
 - **Status**: Options: draft, in-review, approved, implemented
 - **Owner**: Suggest likely teams based on requirement type (e.g., "backend-team", "frontend-team", "sales-engineering", "full-stack-team")
+- **Owner Link**: Person responsible (for Obsidian graph) - provide 3-4 likely options or "I'll specify" (e.g., "John Smith", "Jane Doe", "Alice Johnson")
+- **Domain**: Primary concept area - provide 3-4 relevant concept options (e.g., "Data Lineage", "Authentication", "Performance Optimization")
+- **Tech Stack**: Technologies to be used - use `multiSelect: true` for multiple tools (e.g., "dbt", "Databricks", "Azure Data Factory", "React")
+- **Related Concepts** (optional): Related concepts/techniques - use `multiSelect: true` (e.g., "Schema Auditing", "Incremental Loading", "Error Handling")
 
 Example AskUserQuestion call:
 ```json
@@ -411,6 +455,27 @@ Save to `requirements/REQ-XXX [Requirement Name].md` using the name from Step 2.
 - Replace special characters (`/`, `\`, `:`, `*`, `?`, `"`, `<`, `>`, `|`) with hyphens
 - Maximum filename length: 200 characters (truncate if needed)
 - Example: `REQ-005 Password Reset via Email.md`
+
+**Converting answers to Obsidian wikilink format:**
+
+When writing the YAML frontmatter, convert the user's answers to proper Obsidian wikilink format:
+
+1. **owner_link**: Convert person name to kebab-case and wrap in `[[]]`
+   - User says: "John Smith" → Write: `owner_link: [[John Smith]]`
+   - This will link to `Wiki/People/john-smith.md`
+
+2. **domain**: Convert concept to kebab-case and wrap in `[[]]`
+   - User says: "Data Lineage" → Write: `domain: [[Data Lineage]]`
+   - This will link to `Wiki/Concepts/data-lineage.md`
+
+3. **tech_stack**: Convert each tool to kebab-case and wrap in `[[]]`, comma-separated
+   - User says: ["dbt", "Databricks", "Azure Data Factory"] → Write: `tech_stack: [[dbt]], [[Databricks]], [[Azure Data Factory]]`
+   - These will link to `Wiki/Tools/dbt.md`, `Wiki/Tools/databricks.md`, etc.
+
+4. **related_concepts**: Same as tech_stack but for concepts/techniques
+   - User says: ["Schema Auditing", "Incremental Loading"] → Write: `related_concepts: [[Schema Auditing]], [[Incremental Loading]]`
+
+**Important:** The wiki-ingest skill will later create the actual wiki pages for these links. If the pages don't exist yet, Obsidian will show them as unlinked references (which is fine - they become active links once the pages are created).
 
 After writing, confirm: "Created **REQ-XXX [Name]** at `requirements/REQ-XXX [Name].md`"
 
