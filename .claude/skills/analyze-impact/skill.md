@@ -25,7 +25,7 @@ Perform comprehensive impact analysis to understand what will be affected by cha
 Analyze what's affected by changing a specific requirement.
 
 ### 2. **Concept Impact**
-Analyze requirements and notes that reference a wiki concept.
+Analyze requirements and artifacts that reference a wiki concept.
 
 ### 3. **Tool Impact**
 Analyze what's affected by changing/removing a technology.
@@ -81,8 +81,8 @@ grep pattern="REQ-001" path="requirements" output_mode="content"
 # Find wiki pages that reference this requirement
 grep pattern="REQ-001|\\[\\[REQ-001\\]\\]" path="Wiki" output_mode="files_with_matches"
 
-# Find notes that mention this requirement
-grep pattern="REQ-001|\\[\\[REQ-001\\]\\]" path="notes" output_mode="files_with_matches"
+# Find artifacts that mention this requirement
+grep pattern="REQ-001|\\[\\[REQ-001\\]\\]" path="artifacts" output_mode="files_with_matches"
 
 # Check related_to field in the target (what it depends on)
 # Extract: related_to, domain, tech_stack, owner_link
@@ -100,8 +100,8 @@ grep pattern="\\[\\[Data Lineage\\]\\]" path="requirements" output_mode="content
 # Find other wiki pages linking to this concept
 grep pattern="\\[\\[Data Lineage\\]\\]" path="Wiki" output_mode="files_with_matches"
 
-# Find notes mentioning this concept
-grep pattern="\\[\\[Data Lineage\\]\\]|data lineage" path="notes" output_mode="files_with_matches"
+# Find artifacts mentioning this concept
+grep pattern="\\[\\[Data Lineage\\]\\]|data lineage" path="artifacts" output_mode="files_with_matches"
 ```
 
 #### For Tool Impact
@@ -116,8 +116,8 @@ grep pattern="\\[\\[Databricks\\]\\]" path="requirements" output_mode="content"
 # Find wiki pages mentioning this tool
 grep pattern="\\[\\[Databricks\\]\\]|databricks" path="Wiki" output_mode="files_with_matches"
 
-# Find notes discussing this tool
-grep pattern="\\[\\[Databricks\\]\\]|databricks" path="notes" output_mode="files_with_matches"
+# Find artifacts discussing this tool
+grep pattern="\\[\\[Databricks\\]\\]|databricks" path="artifacts" output_mode="files_with_matches"
 ```
 
 #### For Person Impact
@@ -129,11 +129,11 @@ read file_path="Wiki/People/john-doe.md"
 # Find requirements owned by this person
 grep pattern="owner_link: \\[\\[John Doe\\]\\]" path="requirements" output_mode="content"
 
-# Find notes where this person participated
-grep pattern="\\[\\[John Doe\\]\\]" path="notes" output_mode="files_with_matches"
+# Find artifacts where this person participated
+grep pattern="\\[\\[John Doe\\]\\]" path="artifacts" output_mode="files_with_matches"
 
 # Find decisions this person made
-grep pattern="decision_maker: \\[\\[John Doe\\]\\]" path="notes" output_mode="content"
+grep pattern="decision_maker: \\[\\[John Doe\\]\\]" path="artifacts" output_mode="content"
 ```
 
 ### Step 3: Categorize Impact
@@ -177,7 +177,7 @@ Create a comprehensive report:
 - **2 wiki concepts** reference this requirement
 - **3 tools** are specified in tech stack
 - **1 person** owns this requirement
-- **2 meeting notes** discuss this requirement
+- **2 meeting artifacts** discuss this requirement
 
 **Risk Assessment:**
 - ⚠️  REQ-004 (Session Management) is blocked until REQ-001 is approved
@@ -257,15 +257,15 @@ Create a comprehensive report:
 
 ---
 
-## Notes Impact (2 meeting notes)
+## Notes Impact (2 meeting artifacts)
 
-### notes/2026-04-08-meeting-architecture-review.md
+### artifacts/2026-04-08-meeting-architecture-review.md
 - **Connection:** Discusses REQ-001 implementation approach
 - **Key Decisions:** JWT expiry time, session storage choice
-- **Impact:** Meeting notes capture rationale for current approach
+- **Impact:** Meeting artifacts capture rationale for current approach
 - **Action:** Reference this meeting if changing implementation
 
-### notes/2026-04-05-email-security-requirements.md
+### artifacts/2026-04-05-email-security-requirements.md
 - **Connection:** Security team input on authentication
 - **Key Requirements:** MFA required, password complexity rules
 - **Impact:** ⚠️  Security requirements must be met before approval
@@ -322,7 +322,7 @@ Create a comprehensive report:
 **Prerequisites:**
 - ✅ All acceptance criteria defined (5 criteria present)
 - ✅ Implementation approach detailed
-- ⚠️  Security email requirements not all addressed (see notes/2026-04-05)
+- ⚠️  Security email requirements not all addressed (see artifacts/2026-04-05)
 
 **Recommendations:**
 1. Address security email concerns before moving to in-review
@@ -349,7 +349,7 @@ Create a comprehensive report:
 - Wiki/Tools/bcrypt.md (only used by REQ-001)
 
 **Knowledge Loss:**
-- 2 meeting notes become irrelevant
+- 2 meeting artifacts become irrelevant
 - 1 security email thread loses context
 
 **Impact Radius:** 4 direct + 2 indirect = 6 requirements affected
@@ -361,7 +361,7 @@ Create a comprehensive report:
 ### 🔴 High Priority Actions
 
 1. **Address Security Requirements**
-   - Review notes/2026-04-05-email-security-requirements.md
+   - Review artifacts/2026-04-05-email-security-requirements.md
    - Ensure all security concerns addressed in REQ-001
    - Get security team sign-off before in-review
 
@@ -391,7 +391,7 @@ Create a comprehensive report:
 
 6. **Documentation**
    - Link REQ-001 to architecture decision records
-   - Update meeting notes with final decisions
+   - Update meeting artifacts with final decisions
    - Create FAQ for common authentication questions
 
 ---
@@ -471,7 +471,7 @@ graph TD
 1. Fix security concerns → `update-requirement REQ-001`
 2. Run quality check → `check-requirement-quality REQ-001`
 3. Move to in-review → `update-requirement REQ-001 --status in-review`
-4. Notify stakeholders via meeting notes or email
+4. Notify stakeholders via meeting artifacts or email
 ```
 
 ### Step 5: Assess Risk Level
@@ -525,7 +525,7 @@ Based on impact level, provide actionable guidance:
 ## Important Guidelines
 
 ### DO be comprehensive
-- Check all relationship types (requirements, wiki, notes)
+- Check all relationship types (requirements, wiki, artifacts)
 - Consider both direct and indirect impacts
 - Include people and ownership impacts
 
@@ -621,7 +621,7 @@ Based on impact level, provide actionable guidance:
 ## Success Criteria
 
 A good impact analysis includes:
-- ✅ Comprehensive dependency list (requirements, wiki, notes, people)
+- ✅ Comprehensive dependency list (requirements, wiki, artifacts, people)
 - ✅ Risk level assessment (low/medium/high/critical)
 - ✅ Direct + indirect dependencies
 - ✅ Change-specific impacts

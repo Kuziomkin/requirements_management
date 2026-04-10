@@ -22,14 +22,18 @@ type: [functional_requirement|non_functional_requirement|technical_requirement]
 status: [draft|in-review|approved|implemented]
 priority: [low|medium|high|critical]
 owner: [team-name]
-owner_link: [[Person Name]]  # Link to Wiki/People/ for Obsidian graph
-domain: [[Primary Concept]]  # Link to Wiki/Concepts/
-tech_stack: [[Tool 1]], [[Tool 2]]  # Links to Wiki/Tools/
-related_concepts: [[Concept A]], [[Technique B]]  # Links to Wiki/Concepts/ or Wiki/Techniques/
+owner_link: "[[Person Name]]"
+domain: "[[Primary Concept]]"
+tech_stack:
+  - "[[Tool 1]]"
+  - "[[Tool 2]]"
+related_concepts:
+  - "[[Concept A]]"
+  - "[[Technique B]]"
 related_to:
   - REQ-YYY
   - REQ-ZZZ
-test_cases: []  # Leave empty initially; TC-XXX IDs added later by QA team
+test_cases: []
 ---
 
 # Notes
@@ -70,24 +74,29 @@ test_cases: []  # Leave empty initially; TC-XXX IDs added later by QA team
 
 - **owner**: Team name as plain text for Excel tracking (e.g., `backend-team`, `analytics-team`)
 
-- **owner_link**: Person responsible, using Obsidian wikilink format to create graph connections
+- **owner_link**: Person responsible, using Obsidian wikilink format to create graph connections. Quote wikilinks to ensure proper YAML parsing.
   ```yaml
-  owner_link: [[John Doe]]  # Links to Wiki/People/john-doe.md
+  owner_link: "[[John Doe]]"  # Links to Wiki/People/john-doe.md
   ```
 
-- **domain**: Primary concept area using wikilink to Wiki/Concepts/
+- **domain**: Primary concept area using wikilink to Wiki/Concepts/. Quote wikilinks to ensure proper YAML parsing.
   ```yaml
-  domain: [[Data Lineage]]  # Links to Wiki/Concepts/data-lineage.md
+  domain: "[[Data Lineage]]"  # Links to Wiki/Concepts/data-lineage.md
   ```
 
-- **tech_stack**: Comma-separated wikilinks to Wiki/Tools/ pages for all technologies used
+- **tech_stack**: Array of wikilinks to Wiki/Tools/ pages for all technologies used. Use YAML array format with `-` prefix and quoted wikilinks.
   ```yaml
-  tech_stack: [[dbt]], [[Databricks]], [[Azure Data Factory]]
+  tech_stack:
+    - "[[dbt]]"
+    - "[[Databricks]]"
+    - "[[Azure Data Factory]]"
   ```
 
-- **related_concepts**: Comma-separated wikilinks to Wiki/Concepts/ or Wiki/Techniques/ pages (optional)
+- **related_concepts**: Array of wikilinks to Wiki/Concepts/ or Wiki/Techniques/ pages (optional). Use YAML array format with `-` prefix and quoted wikilinks.
   ```yaml
-  related_concepts: [[Schema Auditing]], [[Incremental Loading]]
+  related_concepts:
+    - "[[Schema Auditing]]"
+    - "[[Incremental Loading]]"
   ```
 
 - **related_to**: Simple string array of REQ-IDs. No comments or descriptions in YAML.

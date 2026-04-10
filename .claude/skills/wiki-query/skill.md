@@ -7,7 +7,7 @@ disable-model-invocation: false
 
 # Wiki Query Skill
 
-Search the Wiki knowledge base and synthesize answers from cross-linked pages, requirements, and notes. Creates new wiki pages if the analysis reveals valuable insights worth preserving.
+Search the Wiki knowledge base and synthesize answers from cross-linked pages, requirements, and artifacts. Creates new wiki pages if the analysis reveals valuable insights worth preserving.
 
 ## When to Use This Skill
 
@@ -159,7 +159,7 @@ For substantial research queries, append to `Wiki/log.md`:
 Provide the synthesized answer with clear citations.
 
 **If no results found:**
-"I couldn't find information about [topic] in the Wiki. This might be worth adding if we have requirements or notes that cover it. Should I search the requirements/ or notes/ directories directly?"
+"I couldn't find information about [topic] in the Wiki. This might be worth adding if we have requirements or artifacts that cover it. Should I search the requirements/ or artifacts/ directories directly?"
 
 **If partial results:**
 "I found some information about [topic] in [[page-1]] and [[page-2]], but it's not fully documented. What specific aspect are you interested in? I can search the requirements for more details."
@@ -367,7 +367,7 @@ A good query response includes:
 "The Wiki hasn't been initialized yet. Run 'ingest requirements' first to create the knowledge base."
 
 **If search returns no results:**
-"I couldn't find '[term]' in the Wiki. Should I search the requirements/ or notes/ directories directly to see if we have information about this?"
+"I couldn't find '[term]' in the Wiki. Should I search the requirements/ or artifacts/ directories directly to see if we have information about this?"
 
 **If pages are missing expected content:**
 "The wiki page for [topic] exists but seems incomplete. Should I re-ingest the requirements to update it?"

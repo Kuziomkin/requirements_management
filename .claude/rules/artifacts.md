@@ -1,14 +1,14 @@
 ---
-paths: ["notes/*.md"]
+paths: ["artifacts/*.md"]
 ---
 
-# Notes Documentation Rules
+# Artifacts Documentation Rules
 
 ## Purpose
 
-Notes capture business analytical information, meeting discussions, emails, research, and open questions. They serve as source material for requirements and wiki pages, and use Obsidian Properties for traceability.
+Artifacts capture business analytical information, meeting discussions, emails, research, and open questions. They serve as source material for requirements and wiki pages, and use Obsidian Properties for traceability.
 
-## Note Types
+## Artifact Types
 
 ### Meeting Notes
 - Team discussions, requirement reviews, architecture decisions
@@ -32,7 +32,7 @@ Notes capture business analytical information, meeting discussions, emails, rese
 
 ## Obsidian Properties Structure
 
-**All notes MUST include YAML frontmatter with Obsidian Properties for automatic linking.**
+**All artifacts MUST include YAML frontmatter with Obsidian Properties for automatic linking.**
 
 ### Required Properties
 
@@ -47,23 +47,38 @@ status: draft | final | archived
 
 ### Optional Properties for Traceability
 
+**IMPORTANT: All wikilinks in YAML must be quoted, and arrays must use proper YAML syntax with `-` prefix.**
+
 ```yaml
 ---
-participants: [[Person A]], [[Person B]]  # Links to Wiki/People/ (for meetings)
-from: [[Person Name]]  # Links to Wiki/People/ (for emails)
-to: [[Person A]], [[Person B]]  # Links to Wiki/People/ (for emails)
-owner: [[Person Name]]  # Links to Wiki/People/ (who wrote/owns this note)
-related_requirements: [[REQ-001]], [[REQ-005]]  # Links to requirements
-domain: [[Concept Name]]  # Links to Wiki/Concepts/
-mentioned_tools: [[Tool 1]], [[Tool 2]]  # Links to Wiki/Tools/
-mentioned_concepts: [[Concept A]], [[Technique B]]  # Links to Wiki/Concepts/ or Wiki/Techniques/
-tags: [architecture, decision, urgent]  # Free-form tags for filtering
+participants:  # Links to Wiki/People/ (for meetings)
+  - "[[Person A]]"
+  - "[[Person B]]"
+from: "[[Person Name]]"  # Links to Wiki/People/ (for emails)
+to:  # Links to Wiki/People/ (for emails)
+  - "[[Person A]]"
+  - "[[Person B]]"
+owner: "[[Person Name]]"  # Links to Wiki/People/ (who wrote/owns this note)
+related_requirements:  # Links to requirements
+  - "[[REQ-001]]"
+  - "[[REQ-005]]"
+domain: "[[Concept Name]]"  # Links to Wiki/Concepts/
+mentioned_tools:  # Links to Wiki/Tools/
+  - "[[Tool 1]]"
+  - "[[Tool 2]]"
+mentioned_concepts:  # Links to Wiki/Concepts/ or Wiki/Techniques/
+  - "[[Concept A]]"
+  - "[[Technique B]]"
+tags:  # Free-form tags for filtering
+  - architecture
+  - decision
+  - urgent
 ---
 ```
 
 ## Complete Example: Meeting Notes
 
-**File:** `notes/2026-04-09-data-pipeline-review.md`
+**File:** `artifacts/2026-04-09-data-pipeline-review.md`
 
 ```markdown
 ---
@@ -138,7 +153,7 @@ We reviewed the proposed architecture for [[REQ-003]] (Customer 360 Data Pipelin
 
 ## Complete Example: Email Notes
 
-**File:** `notes/2026-04-08-email-compliance-requirements.md`
+**File:** `artifacts/2026-04-08-email-compliance-requirements.md`
 
 ```markdown
 ---
@@ -207,7 +222,7 @@ Legal and compliance team reviewed [[REQ-003]] (Customer 360 Data Pipeline) and 
 
 ## Complete Example: Open Questions
 
-**File:** `notes/2026-04-09-open-questions-data-pipeline.md`
+**File:** `artifacts/2026-04-09-open-questions-data-pipeline.md`
 
 ```markdown
 ---
@@ -276,7 +291,7 @@ Last Updated: 2026-04-09
 - **Rationale:** Better ML integration, team expertise, cost advantages
 - **Decided By:** [[John Doe]]
 - **Date:** 2026-04-09
-- **Related:** See `notes/2026-04-09-data-pipeline-review.md`
+- **Related:** See `artifacts/2026-04-09-data-pipeline-review.md`
 
 ## Related
 - [[REQ-003]] — Customer 360 Data Pipeline
@@ -311,16 +326,16 @@ Use descriptive, date-prefixed names:
 ## Why Obsidian Properties Matter
 
 **Automatic Graph Building:**
-- Click on [[John Doe]] in wiki → see all meetings, notes, requirements they're involved in
-- Click on [[Databricks]] → see all notes, requirements, decisions mentioning this tool
-- Click on [[Data Lineage]] → see all notes, requirements, wiki pages about this concept
+- Click on [[John Doe]] in wiki → see all meetings, artifacts, requirements they're involved in
+- Click on [[Databricks]] → see all artifacts, requirements, decisions mentioning this tool
+- Click on [[Data Lineage]] → see all artifacts, requirements, wiki pages about this concept
 
 **Impact Analysis:**
-- When a decision changes, find all notes and requirements affected
+- When a decision changes, find all artifacts and requirements affected
 - Trace from meeting note → decision → requirement → wiki concept
 
 **Knowledge Discovery:**
-- Find related notes through shared participants, tools, or concepts
+- Find related artifacts through shared participants, tools, or concepts
 - Discover connections between decisions made in different meetings
 
 ## Integration with Requirements and Wiki
@@ -331,15 +346,15 @@ Use descriptive, date-prefixed names:
 - Open questions get resolved and documented in requirements
 
 **Notes feed into Wiki:**
-- Repeated concepts in notes get extracted to Wiki/Concepts/
+- Repeated concepts in artifacts get extracted to Wiki/Concepts/
 - Tools mentioned frequently get documented in Wiki/Tools/
-- People in notes get pages in Wiki/People/
+- People in artifacts get pages in Wiki/People/
 
 **Workflow:**
 1. Create note with Obsidian Properties
 2. Link to people, tools, concepts using `[[wikilinks]]`
-3. Run `wiki-ingest` to process notes into wiki pages
-4. Link notes to requirements using `related_requirements:` property
+3. Run `wiki-ingest` to process artifacts into wiki pages
+4. Link artifacts to requirements using `related_requirements:` property
 5. Use Obsidian graph to navigate connections
 
 ## Validation with wiki-lint
@@ -351,4 +366,4 @@ When running `wiki-lint`, the tool checks:
 - All `mentioned_concepts:` links point to Wiki/Concepts/ or Wiki/Techniques/
 - All `related_requirements:` links point to existing requirements
 
-**Rationale:** Notes with Obsidian Properties create a traceable knowledge graph where decisions, discussions, and analysis are automatically linked to requirements, people, and concepts. This transforms scattered notes into a navigable, searchable knowledge base.
+**Rationale:** Notes with Obsidian Properties create a traceable knowledge graph where decisions, discussions, and analysis are automatically linked to requirements, people, and concepts. This transforms scattered artifacts into a navigable, searchable knowledge base.

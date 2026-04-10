@@ -1,22 +1,22 @@
 ---
-name: write-note
-description: Create structured note documents with Obsidian Properties for traceability. Use when the user wants to create meeting notes, email notes, project notes, open questions, or analysis notes. Triggers on phrases like "create a note", "document this meeting", "save these notes", "write meeting notes", "document email", "create open questions", or "write project notes".
-argument-hint: note type or topic
+name: write-artifact
+description: Create structured artifact documents with Obsidian Properties for traceability. Use when the user wants to create meeting artifacts, email artifacts, project artifacts, open questions, or analysis artifacts. Triggers on phrases like "create an artifact", "document this meeting", "save these artifacts", "write meeting artifacts", "document email", "create open questions", or "write project artifacts".
+argument-hint: artifact type or topic
 disable-model-invocation: false
 ---
 
-# Write Note Skill
+# Write Artifact Skill
 
-Create structured, traceable note documents with Obsidian Properties (YAML frontmatter) that automatically link to requirements, wiki pages, people, and concepts. Notes serve as source material for requirements and wiki knowledge base.
+Create structured, traceable artifact documents with Obsidian Properties (YAML frontmatter) that automatically link to requirements, wiki pages, people, and concepts. Artifacts serve as source material for requirements and wiki knowledge base.
 
 ## When to Use This Skill
 
-- User says "create meeting notes" or "document this meeting"
-- User wants to save email content as notes
-- User asks to "create project notes" or "document research"
+- User says "create meeting artifacts" or "document this meeting"
+- User wants to save email content as artifacts
+- User asks to "create project artifacts" or "document research"
 - User wants to track open questions
-- User asks to "write analysis notes" or "document findings"
-- User says "take notes" or "save these notes"
+- User asks to "write analysis artifacts" or "document findings"
+- User says "take artifacts" or "save these artifacts"
 
 ## Note Types
 
@@ -232,13 +232,25 @@ type: meeting_notes
 date: [YYYY-MM-DD]
 title: [Title from Step 2]
 status: [draft|final|archived]
-participants: [[Person A]], [[Person B]], [[Person C]]
-owner: [[Person Name]]
-related_requirements: [[REQ-XXX]], [[REQ-YYY]]
-domain: [[Concept Name]]
-mentioned_tools: [[Tool 1]], [[Tool 2]]
-mentioned_concepts: [[Concept A]], [[Technique B]]
-tags: [tag1, tag2, tag3]
+participants:
+  - "[[Person A]]"
+  - "[[Person B]]"
+  - "[[Person C]]"
+owner: "[[Person Name]]"
+related_requirements:
+  - "[[REQ-XXX]]"
+  - "[[REQ-YYY]]"
+domain: "[[Concept Name]]"
+mentioned_tools:
+  - "[[Tool 1]]"
+  - "[[Tool 2]]"
+mentioned_concepts:
+  - "[[Concept A]]"
+  - "[[Technique B]]"
+tags:
+  - tag1
+  - tag2
+  - tag3
 ---
 
 # [Note Title]
@@ -303,14 +315,22 @@ type: email
 date: [YYYY-MM-DD]
 title: [Email subject or summary]
 status: [draft|final|archived]
-from: [[Sender Name]]
-to: [[Person A]], [[Person B]]
-owner: [[Person Name]]
-related_requirements: [[REQ-XXX]]
-domain: [[Concept Name]]
-mentioned_tools: [[Tool 1]], [[Tool 2]]
-mentioned_concepts: [[Concept A]]
-tags: [tag1, tag2]
+from: "[[Sender Name]]"
+to:
+  - "[[Person A]]"
+  - "[[Person B]]"
+owner: "[[Person Name]]"
+related_requirements:
+  - "[[REQ-XXX]]"
+domain: "[[Concept Name]]"
+mentioned_tools:
+  - "[[Tool 1]]"
+  - "[[Tool 2]]"
+mentioned_concepts:
+  - "[[Concept A]]"
+tags:
+  - tag1
+  - tag2
 ---
 
 # Email: [Subject Line]
@@ -361,12 +381,20 @@ type: project_notes
 date: [YYYY-MM-DD]
 title: [Project or research topic]
 status: [draft|final|archived]
-owner: [[Person Name]]
-related_requirements: [[REQ-XXX]]
-domain: [[Concept Name]]
-mentioned_tools: [[Tool 1]], [[Tool 2]]
-mentioned_concepts: [[Concept A]], [[Technique B]]
-tags: [research, architecture, exploration]
+owner: "[[Person Name]]"
+related_requirements:
+  - "[[REQ-XXX]]"
+domain: "[[Concept Name]]"
+mentioned_tools:
+  - "[[Tool 1]]"
+  - "[[Tool 2]]"
+mentioned_concepts:
+  - "[[Concept A]]"
+  - "[[Technique B]]"
+tags:
+  - research
+  - architecture
+  - exploration
 ---
 
 # [Project Topic]
@@ -431,11 +459,15 @@ type: open_questions
 date: [YYYY-MM-DD]
 title: Open Questions - [Topic]
 status: [draft|final]
-owner: [[Person Name]]
-related_requirements: [[REQ-XXX]]
-domain: [[Concept Name]]
-mentioned_tools: [[Tool 1]]
-tags: [blocked, decision-needed]
+owner: "[[Person Name]]"
+related_requirements:
+  - "[[REQ-XXX]]"
+domain: "[[Concept Name]]"
+mentioned_tools:
+  - "[[Tool 1]]"
+tags:
+  - blocked
+  - decision-needed
 ---
 
 # Open Questions - [Topic]
@@ -493,12 +525,19 @@ type: analysis
 date: [YYYY-MM-DD]
 title: [Analysis topic]
 status: [draft|final|archived]
-owner: [[Person Name]]
-related_requirements: [[REQ-XXX]]
-domain: [[Concept Name]]
-mentioned_tools: [[Tool 1]], [[Tool 2]]
-mentioned_concepts: [[Concept A]]
-tags: [analysis, business, impact]
+owner: "[[Person Name]]"
+related_requirements:
+  - "[[REQ-XXX]]"
+domain: "[[Concept Name]]"
+mentioned_tools:
+  - "[[Tool 1]]"
+  - "[[Tool 2]]"
+mentioned_concepts:
+  - "[[Concept A]]"
+tags:
+  - analysis
+  - business
+  - impact
 ---
 
 # Analysis: [Topic]

@@ -1,0 +1,22 @@
+.codemie/
+.venv/
+__pycache__
+.vscode/
+
+# Raw/scratch files
+raw/
+!raw/README.md
+
+# Python
+*.pyc
+*.pyo
+*.egg-info/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~

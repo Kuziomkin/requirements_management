@@ -18,7 +18,8 @@
       "Bash(claude sessions:*)",
       "mcp__requirements-manager__create_requirement_tracker",
       "Bash(python:*)",
-      "Bash(ls -d */)"
+      "Bash(ls -d */)",
+      "Bash(cat:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

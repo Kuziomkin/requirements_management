@@ -353,7 +353,7 @@ Based on the changes made, suggest relevant actions:
 "Consider:
 - Running `wiki-ingest` to update wiki pages with new concepts/tools
 - Checking if related requirements need updates
-- Running `analyze-impact` to see affected notes/wiki pages"
+- Running `analyze-impact` to see affected artifacts/wiki pages"
 
 **If related requirements added:**
 "Consider:
@@ -373,7 +373,7 @@ Based on the changes made, suggest relevant actions:
 - Maintain YAML formatting and structure
 
 ### DO track significant changes
-- Add change history notes for major updates
+- Add change history artifacts for major updates
 - Document rationale for status changes
 - Note who made the change and when
 

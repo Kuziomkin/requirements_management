@@ -12,7 +12,7 @@ A comprehensive requirements management system that combines structured requirem
 - **Traceability**: Related requirements, test cases, stakeholders tracked in YAML
 
 ### 📚 Knowledge Base (Wiki)
-- **AI-Maintained Wiki**: Automatically extracts concepts, techniques, tools, and people from requirements and notes
+- **AI-Maintained Wiki**: Automatically extracts concepts, techniques, tools, and people from requirements and artifacts
 - **Cross-Linked Pages**: Obsidian-compatible wikilinks create a navigable knowledge graph
 - **Compounding Knowledge**: Wiki grows over time instead of re-processing from scratch
 - **Organized Categories**: Concepts, Techniques, Tools, People, Sources
@@ -92,17 +92,17 @@ Claude Code will:
 4. Create a structured requirement document
 5. Automatically sync to the Excel tracker
 
-### Creating Notes
+### Creating Artifacts
 
 Document meeting notes, decisions, or research:
 
 ```
-"Create a note for today's requirements review meeting"
+"Create an artifact for today's requirements review meeting"
 ```
 
 ### Ingesting into Wiki
 
-Process requirements and notes into the knowledge base:
+Process requirements and artifacts into the knowledge base:
 
 ```
 "Ingest the new requirements into the wiki"
@@ -160,8 +160,10 @@ requirements_management/
 │   ├── REQ-001 Feature.md    # Individual requirements with YAML frontmatter
 │   ├── REQ-002 Enhancement.md
 │   └── requirements_tracker.xlsx  # Auto-synced Excel tracker
-├── notes/                     # Meeting notes, design discussions, research
+├── artifacts/                 # Meeting notes, design discussions, research
 │   └── (created as needed)
+├── raw/                       # Raw/scratch files, temporary documents (gitignored)
+│   └── (anything goes here)
 ├── Wiki/                      # AI-maintained knowledge base
 │   ├── Concepts/             # Abstract ideas, principles, patterns
 │   ├── Techniques/           # Methods, procedures, algorithms
@@ -223,8 +225,8 @@ This repository is also an Obsidian vault:
 | `write-requirement` | Create structured requirements | "I need a requirement for..." |
 | `update-requirement` | Modify existing requirements | "Update REQ-001 status to approved" |
 | `check-requirement-quality` | Validate requirement completeness | "Check REQ-003 quality" |
-| `write-note` | Create structured notes | "Create a meeting note" |
-| `wiki-ingest` | Process requirements/notes into wiki | "Ingest requirements into wiki" |
+| `write-artifact` | Create structured artifacts | "Create a meeting artifact" |
+| `wiki-ingest` | Process requirements/artifacts into wiki | "Ingest requirements into wiki" |
 | `wiki-query` | Search and answer from wiki | "What does the wiki say about...?" |
 | `wiki-lint` | Check wiki health | "Lint the wiki" |
 | `visualize-requirements` | Generate dependency graphs | "Visualize requirements" |

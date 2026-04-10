@@ -8,16 +8,19 @@ This is a requirements management system with an integrated knowledge base (Wiki
 
 **Three-layer architecture:**
 1. **requirements/** - Structured REQ-XXX documents (YAML frontmatter + markdown)
-2. **notes/** - Meeting notes, design discussions, research, decisions
+2. **artifacts/** - Meeting notes, design discussions, research, decisions
 3. **Wiki/** - AI-maintained knowledge base (Concepts, Techniques, Tools, People, Sources)
 
+**Additional directories:**
+- **raw/** - Raw/scratch files, temporary documents, data exports (gitignored)
+
 **Core workflow:**
-1. User creates requirements via `write-requirement` skill or adds notes via `write-note` skill
+1. User creates requirements via `write-requirement` skill or adds artifacts via `write-artifact` skill
 2. System generates REQ-XXX ID and checks for duplicates using requirements-tracker subagent
 3. Interactive interview gathers implementation details
-4. Document is written to `requirements/REQ-XXX [Name].md` or `notes/`
+4. Document is written to `requirements/REQ-XXX [Name].md` or `artifacts/`
 5. Post-tool-use hook automatically syncs YAML frontmatter to `requirements/requirements_tracker.xlsx`
-6. User runs `wiki-ingest` to process requirements/notes into cross-linked wiki pages
+6. User runs `wiki-ingest` to process requirements/artifacts into cross-linked wiki pages
 7. User queries wiki via `wiki-query` to get synthesized answers from the knowledge base
 
 ## Architecture
@@ -53,7 +56,7 @@ This is a requirements management system with an integrated knowledge base (Wiki
   - `overview.md` - Wiki introduction
   - `CLAUDE.md` - Detailed maintenance schema
 - **Operations**:
-  - **Ingest** (`wiki-ingest` skill): Process requirements/notes, create 8-12 focused wiki pages with cross-links
+  - **Ingest** (`wiki-ingest` skill): Process requirements/artifacts, create 8-12 focused wiki pages with cross-links
   - **Query** (`wiki-query` skill): Search wiki and synthesize answers with citations
   - **Lint** (`wiki-lint` skill): Check for orphaned pages, broken links, contradictions, stale content
 - **Key principles**:
@@ -70,11 +73,11 @@ This is a requirements management system with an integrated knowledge base (Wiki
 - `update-requirement` - Modify existing requirement status, priority, relationships
 - `check-requirement-quality` - Validate requirements for completeness before approval
 
-**Note Management:**
-- `write-note` - Create structured notes (meeting notes, email notes, open questions, analysis)
+**Artifact Management:**
+- `write-artifact` - Create structured artifacts (meeting notes, email notes, open questions, analysis)
 
 **Wiki Operations:**
-- `wiki-ingest` - Process requirements/notes into cross-linked wiki pages
+- `wiki-ingest` - Process requirements/artifacts into cross-linked wiki pages
 - `wiki-query` - Search wiki and answer questions from knowledge base
 - `wiki-lint` - Check wiki health (orphans, broken links, contradictions, coverage gaps)
 
@@ -188,7 +191,7 @@ pip install pandas openpyxl  # Required for Excel tracking hook
 
 ### When working with the Wiki:
 - **Always use appropriate skills** - `wiki-ingest`, `wiki-query`, `wiki-lint` instead of manual operations
-- **Create 8-12 focused pages per ingest** - Extract key concepts, techniques, tools, people from requirements/notes
+- **Create 8-12 focused pages per ingest** - Extract key concepts, techniques, tools, people from requirements/artifacts
 - **Cross-link aggressively** - Use `[[page-name]]` wikilinks to connect related concepts
 - **Cite sources** - Link back to requirements using `[REQ-001](../../requirements/REQ-001%20Name.md)`
 - **Keep pages atomic** - One concept per page, not broad summaries
@@ -245,7 +248,7 @@ This repository is also an **Obsidian vault**. The Wiki system follows Obsidian 
 
 - **Wikilinks**: Use `[[page-name]]` syntax (not `[page name](./page-name.md)`)
 - **No file extensions in wikilinks**: `[[data-lineage]]` not `[[data-lineage.md]]`
-- **Relative paths for external links**: Use `../../requirements/` and `../../notes/` for citations
+- **Relative paths for external links**: Use `../../requirements/` and `../../artifacts/` for citations
 - **URL-encode spaces**: Use `%20` in markdown links: `[REQ-001](../../requirements/REQ-001%20Feature.md)`
 - **Kebab-case filenames**: Required for reliable linking across systems
 - **Graph view**: Obsidian can visualize the wiki's cross-link structure

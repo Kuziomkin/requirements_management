@@ -17,6 +17,7 @@ echo "🗂️  Creating directory structure..."
 mkdir -p Wiki/{Concepts,Techniques,Tools,People,Sources}
 mkdir -p requirements
 mkdir -p notes
+mkdir -p raw
 
 # 4. Initialize Wiki files (only if not already present)
 if [ ! -f "Wiki/index.md" ]; then
@@ -58,6 +59,7 @@ Just ask naturally:
 ```
 requirements/           → Structured requirement documents (REQ-XXX format)
 notes/                  → Meeting notes, design discussions, research
+raw/                    → Raw/scratch files, temporary documents (gitignored)
 Wiki/
   ├── Concepts/         → Abstract ideas, principles, patterns
   ├── Techniques/       → Methods, algorithms, procedures
@@ -153,6 +155,9 @@ A persistent, compounding knowledge base where:
 1. **requirements/** - Structured requirement documents (REQ-XXX format with YAML frontmatter)
 2. **notes/** - Meeting notes, design discussions, research, decisions
 3. **Wiki/** - AI-maintained knowledge pages organized by category
+
+Additionally:
+- **raw/** - Raw/scratch files, temporary documents (not tracked in git)
 
 ### Operations
 

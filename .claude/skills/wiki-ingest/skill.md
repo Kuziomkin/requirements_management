@@ -51,16 +51,16 @@ Ask the user which sources to process using AskUserQuestion:
         {"label": "All requirements (REQ-* files)", "description": "Process all requirement documents in requirements/"},
         {"label": "Recent requirements (last 7 days)", "description": "Only process requirements modified in the last week"},
         {"label": "Specific requirements", "description": "You'll specify which REQ-IDs to process"},
-        {"label": "All notes", "description": "Process all markdown files in notes/"},
+        {"label": "All artifacts", "description": "Process all markdown files in artifacts/"},
         {"label": "Recent notes (last 7 days)", "description": "Only process notes modified in the last week"},
-        {"label": "Specific notes", "description": "You'll specify which note files to process"}
+        {"label": "Specific artifacts", "description": "You'll specify which note files to process"}
       ]
     }
   ]
 }
 ```
 
-**If user selects "Specific requirements" or "Specific notes":**
+**If user selects "Specific requirements" or "Specific artifacts":**
 - Ask for file paths or REQ-IDs
 - Example: "Which requirements? (e.g., REQ-001, REQ-005, REQ-012)"
 
@@ -74,7 +74,7 @@ Read the selected files thoroughly:
 ```bash
 # Use Glob to find files
 glob pattern="requirements/REQ-*.md"
-glob pattern="notes/*.md"
+glob pattern="artifacts/*.md"
 
 # Use Read to read each file
 read file_path="requirements/REQ-001 Feature.md"
@@ -156,7 +156,7 @@ Examples, requirements using this, implementation details, responsibilities, etc
 
 ## Sources
 - [REQ-001 Feature Name](../../requirements/REQ-001%20Feature%20Name.md)
-- [Meeting Notes 2026-04-09](../../notes/2026-04-09-meeting.md)
+- [Meeting Notes 2026-04-09](../../artifacts/2026-04-09-meeting.md)
 ```
 
 **Category assignment:**
@@ -191,7 +191,7 @@ Always cite sources with relative paths (URL-encode spaces as `%20`):
 ```markdown
 ## Sources
 - [REQ-001 Feature](../../requirements/REQ-001%20Feature.md)
-- [Meeting Notes](../../notes/2026-04-09-meeting.md)
+- [Meeting Notes](../../artifacts/2026-04-09-meeting.md)
 ```
 
 ### Step 4: Update Index
@@ -241,7 +241,7 @@ Append to `Wiki/log.md`:
 - **Sources**:
   - requirements/REQ-001 Feature.md
   - requirements/REQ-002 Enhancement.md
-  - notes/2026-04-09-meeting.md
+  - artifacts/2026-04-09-meeting.md
 - **Type**: Ingest
 - **Description**: Processed requirements for data pipeline and related meeting notes
 - **Pages Created** (X total):
@@ -318,7 +318,7 @@ Your knowledge base now has [X] pages across [Y] categories.
 - Don't ask user permission - just initialize
 
 **If no sources found:**
-- Report: "No requirements or notes found matching your criteria. Please add documents to requirements/ or notes/ first."
+- Report: "No requirements or notes found matching your criteria. Please add documents to requirements/ or artifacts/ first."
 
 **If Wiki files are corrupted:**
 - Report the issue to user

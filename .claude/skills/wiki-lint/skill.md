@@ -148,7 +148,7 @@ grep pattern="\[\[REQ-[0-9]+\]\]" path="Wiki" output_mode="content"
 
 **Method:**
 1. Use Grep to find all markdown links in wiki pages
-2. Extract file paths (especially to requirements/ and notes/)
+2. Extract file paths (especially to requirements/ and artifacts/)
 3. Check if files exist
 
 **Code pattern:**
@@ -158,7 +158,7 @@ grep pattern="\[([^\]]+)\]\(([^\)]+)\)" path="Wiki" output_mode="content"
 
 # For each link, resolve relative path and check existence:
 # - From Wiki/Concepts/ → ../../requirements/REQ-001.md
-# - From Wiki/Tools/ → ../../notes/2026-04-09.md
+# - From Wiki/Tools/ → ../../artifacts/2026-04-09.md
 
 # Report missing files
 ```
@@ -171,7 +171,7 @@ grep pattern="\[([^\]]+)\]\(([^\)]+)\)" path="Wiki" output_mode="content"
 - [REQ-003](../../requirements/REQ-003%20Data%20Pipeline.md) (line 45) — File not found
 
 ### In Wiki/Techniques/dbt-modeling.md:
-- [Meeting Notes](../../notes/2026-03-15-meeting.md) (line 67) — File not found
+- [Meeting Notes](../../artifacts/2026-03-15-meeting.md) (line 67) — File not found
 
 **Recommendation:** Update paths or remove citations to deleted files.
 ```
